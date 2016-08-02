@@ -13,7 +13,6 @@ language modes for the languages you'll be working with. For example if
 you are going to use Ruby, C, and CSS, you might add this:
 
 ```javascript
-require('codemirror')
 require('codemirror/mode/ruby/ruby')
 require('codemirror/mode/clike/clike')
 require('codemirror/mode/css/css')
