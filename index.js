@@ -52,6 +52,7 @@ var Highlighter = {
       if (classMatch){
         lang = classMatch[1]
       } else {
+        // If we can't determine language, skip it.
         return
       }
     }
