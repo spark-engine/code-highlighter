@@ -1,7 +1,6 @@
 var assert = require('chai').assert
 
 var Highlight = require('../')
-var Event = require('compose-event')
 var $ = function(str) { return document.querySelector(str) }
 
 require('codemirror/mode/ruby/ruby')
