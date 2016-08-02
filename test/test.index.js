@@ -36,22 +36,16 @@ describe('Highlight', function(){
 
   describe('highlightAll', function() {
     it('automatically highlights all code on page', function() {
-      addCode('puts @awesome if cool?', 'ruby')
-      addCode("$bg: #eee;\nbody { background: $bg; }", 'scss')
+      addCode("$bg: #eee; body { background: $bg; }", 'scss')
 
       Highlight.highlight()
 
       // newlines are difficult
       // splitting into an array makes it easier to test the result
       //
-      var expected = []
-      expected.push('<pre class="lang-ruby highlighted"><code class="highlighted-code static-code cm-s-default"><span class="cm-variable">puts</span> <span class="cm-variable-2">@awesome</span> <span class="cm-keyword">if</span> <span class="cm-variable">cool?</span></code></pre><pre class="lang-scss highlighted"><code class="highlighted-code static-code cm-s-default">$<span class="cm-tag">bg</span>: <span class="cm-builtin">#eee</span>;')
-      expected.push('<span class="cm-tag">body</span> { <span class="cm-property">background</span>: $<span class="cm-variable">bg</span>; }</code></pre>')
+      var expected = '<pre class="lang-scss highlighted"><code class="highlighted-code static-code cm-s-default"><span class="cm-variable-2">$bg</span>: <span class="cm-atom">#eee</span>; <span class="cm-tag">body</span> { <span class="cm-property">background</span>: <span class="cm-variable-2">$bg</span>; }</code></pre>'
       
-      lines = $('#code').innerHTML.split("\n")
-      Array.prototype.forEach.call(lines, function(line, index) {
-        assert.equal(line, expected[index])
-      })
+      assert.equal($('#code').innerHTML, expected)
 
     })
   })
