@@ -45,3 +45,34 @@ Then to highlight all code snippets on the page:
 ```javascript
 Highlighter.highlight()
 ```
+
+### Alias languages
+
+Some languages are subsets of different parsers in CodeMirror. For example,
+Scss is handled by the CSS parser. CodeMirror uses mimetypes rather than language name to select the parser. For scss, you'd use `data-lang="text/x-scss"`. That's kind of verbose so this library adds some aliases.
+
+```
+aliases: {
+  'c'     : 'text/x-csrc',
+  'markup': 'text/html',
+  'html'  : 'text/html',
+  'js'    : 'text/javascript',
+  'json'  : 'application/json',
+  'java'  : 'text/x-java',
+  'bash'  : 'text/x-sh',
+  'sass'  : 'text/x-sass',
+  'scss'  : 'text/x-scss',
+  'sh'    : 'text/x-sh'
+},
+```
+
+If you want to add aliases you can do so like this:
+
+```js
+var Highlighter = require('compose-code-highlighter')
+Highlighter.addAlias({
+  'less': 'text/x-less'
+})
+```
+
+I'm happy to accept pullrequests for adding aliases to the default list.

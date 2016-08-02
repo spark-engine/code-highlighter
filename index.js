@@ -14,14 +14,16 @@ require('codemirror/addon/runmode/runmode.js')
 var Highlighter = {
 
   aliases: {
-    'markup': 'htmlmixed',
-    'html'  : 'htmlmixed',
-    'json'  : 'javascript',
-    'java'  : 'clike',
-    'bash'  : 'shell',
-    'sh'    : 'shell',
-    'sass'  : 'css',
-    'scss'  : 'css'
+    'bash'  : 'text/x-sh',
+    'c'     : 'text/x-csrc',
+    'html'  : 'text/html',
+    'js'    : 'text/javascript',
+    'json'  : 'application/json',
+    'java'  : 'text/x-java',
+    'markup': 'text/html',
+    'sass'  : 'text/x-sass',
+    'scss'  : 'text/x-scss',
+    'sh'    : 'text/x-sh'
   },
 
   addAlias: function(newAliases) {
