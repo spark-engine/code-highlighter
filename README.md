@@ -48,18 +48,18 @@ Highlighter.highlight()
 
 ### Alias languages
 
-Some languages are subsets of different parsers in CodeMirror. For example,
-Scss is handled by the CSS parser. CodeMirror uses mimetypes rather than language name to select the parser. For scss, you'd use `data-lang="text/x-scss"`. That's kind of verbose so this library adds some aliases.
+If your language doesn't seem to be highlighting properly, you can specify
+the mimetype that CodeMirror is using to identify your language. For Scss, you'd use `data-lang="text/x-scss"`. That's kind of verbose so this library adds some aliases so you can go on using `data-lang="scss"` and it is converted before invoking CodeMirror.
 
 ```
 aliases: {
+  'bash'  : 'text/x-sh',
   'c'     : 'text/x-csrc',
-  'markup': 'text/html',
   'html'  : 'text/html',
   'js'    : 'text/javascript',
   'json'  : 'application/json',
   'java'  : 'text/x-java',
-  'bash'  : 'text/x-sh',
+  'markup': 'text/html',
   'sass'  : 'text/x-sass',
   'scss'  : 'text/x-scss',
   'sh'    : 'text/x-sh'
