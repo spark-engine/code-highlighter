@@ -4,7 +4,7 @@ Easily highlight static code snippets using the wonderful
 [CodeMirror](https://codemirror.net/). This wraps the CodeMirror run mode
 feature and adds language aliases, and DOM interaction.
 
-[![Build Status](http://img.shields.io/travis/spark-engine/spark-code-highlighter.svg?style=flat-square)](https://travis-ci.org/spark-engine/spark-code-highlighter)
+[![Build Status](http://img.shields.io/travis/spark-engine/code-highlighter.svg?style=flat-square)](https://travis-ci.org/spark-engine/code-highlighter)
 
 ## Setup:
 
@@ -13,7 +13,7 @@ language modes for the languages you'll be working with. For example if
 you are going to highlight HTML, Javascript, and CSS, you might add this:
 
 ```javascript
-var Highlighter = require( 'spark-code-highlighter' )
+var Highlighter = require( '@spark-engine/code-highlighter' )
 
 // Require highlighter modes
 require( 'codemirror/mode/htmlmixed/htmlmixed' )
