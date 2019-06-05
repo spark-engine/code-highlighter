@@ -1,29 +1,31 @@
-# Compose Code Highlighter
+# Spark Code Highlighter
 
 Easily highlight static code snippets using the wonderful
 [CodeMirror](https://codemirror.net/). This wraps the CodeMirror run mode
 feature and adds language aliases, and DOM interaction.
 
-[![Build Status](http://img.shields.io/travis/compose-ui/code-highlighter.svg?style=flat-square)](https://travis-ci.org/compose-ui/code-highlighter)
+[![Build Status](http://img.shields.io/travis/spark-engine/spark-code-highlighter.svg?style=flat-square)](https://travis-ci.org/spark-engine/spark-code-highlighter)
 
-### Setup:
+## Setup:
 
 When requiring this module, be sure to also require the CodeMirror
 language modes for the languages you'll be working with. For example if
-you are going to use Ruby, C, and CSS, you might add this:
+you are going to highlight HTML, Javascript, and CSS, you might add this:
 
 ```javascript
-require('codemirror/mode/ruby/ruby')
-require('codemirror/mode/clike/clike')
-require('codemirror/mode/css/css')
+var Highlighter = require( 'spark-code-highlighter' )
+
+// Require highlighter modes
+require( 'codemirror/mode/htmlmixed/htmlmixed' )
+require( 'codemirror/mode/javascript/javascript' )
+require( 'codemirror/mode/css/css' )
 ```
 
 See [CodeMirror's mode documentation](https://codemirror.net/mode/) for a complete list of supported languages.
 
-### Usage
+## Usage
 
-Code snippets can be any element (not just a `<pre>` block) but should either have a
-`data-lang` attribute to set the language or should have a classname matching matching `lang-[language]`.
+Code snippets can be any element (not just a `<pre>` block) with `data-lang` attribute to set the language.
 
 For example:
 
@@ -34,7 +36,7 @@ body {
 }
 </pre>
 
-<div class='lang-ruby'>
+<div data-lang='ruby'>
 puts 'hello world'
 </div>
 ```
@@ -42,36 +44,35 @@ puts 'hello world'
 Then to highlight all code snippets on the page:
 
 ```javascript
-Highlighter.highlight()
+Highlighter.highlight([selector])
 ```
 
-### Alias languages
+Pass a selector to only highlight code snippets which match that selector. The default selector is `data-lang`.
+
+## Alias languages
 
 If your language doesn't seem to be highlighting properly, you can specify
-the mimetype that CodeMirror is using to identify your language. For Scss, you'd use `data-lang="text/x-scss"`. That's kind of verbose so this library adds some aliases so you can go on using `data-lang="scss"` and it is converted before invoking CodeMirror.
+the mimetype that CodeMirror is using to identify your language. For SCSS, you'd use `data-lang="text/x-scss"`. That's kind of verbose so this library adds some aliases so you can go on using `data-lang="scss"` and it is converted before invoking CodeMirror.
 
 ```
-aliases: {
-  'bash'  : 'text/x-sh',
-  'c'     : 'text/x-csrc',
+var aliases = {
   'html'  : 'text/html',
+  'slim'  : 'text/slim',
   'js'    : 'text/javascript',
   'json'  : 'application/json',
-  'java'  : 'text/x-java',
-  'markup': 'text/html',
   'sass'  : 'text/x-sass',
   'scss'  : 'text/x-scss',
+  'bash'  : 'text/x-sh',
   'sh'    : 'text/x-sh'
-},
+}
 ```
 
-If you want to add aliases you can do so like this:
+To add an alias of your own, pass an object to `aliasLang`.
 
 ```js
-var Highlighter = require('compose-code-highlighter')
-Highlighter.addAlias({
+Highlighter.aliasLang({
   'less': 'text/x-less'
 })
 ```
 
-I'm happy to accept pullrequests for adding aliases to the default list.
+And of course, remember to require the appropriate CodeMirror modes for your lanugages.

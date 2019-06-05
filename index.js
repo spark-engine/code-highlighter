@@ -1,86 +1,57 @@
 var CodeMirror = require('codemirror')
-require('codemirror/addon/runmode/runmode.js')
 
 // Use CodeMirror to render static code higlighting
 //
 // Example:
 //
-//   <pre class="lang-ruby">
-//     puts 'awesome' if true
+//   <pre data-lang="ruby">
+//     puts @awesome if true
 //   </pre>
 //
 
 
-var Highlighter = {
+var aliases = {
+  'html'  : 'text/html',
+  'slim'  : 'text/slim',
+  'js'    : 'text/javascript',
+  'json'  : 'application/json',
+  'sass'  : 'text/x-sass',
+  'scss'  : 'text/x-scss',
+  'bash'  : 'text/x-sh',
+  'sh'    : 'text/x-sh'
+}
 
-  aliases: {
-    'bash'  : 'text/x-sh',
-    'c'     : 'text/x-csrc',
-    'html'  : 'text/html',
-    'js'    : 'text/javascript',
-    'json'  : 'application/json',
-    'java'  : 'text/x-java',
-    'markup': 'text/html',
-    'sass'  : 'text/x-sass',
-    'scss'  : 'text/x-scss',
-    'sh'    : 'text/x-sh'
-  },
+// Process code through CodeMirror which injects highlighted code into element
+function process(code, lang, el) {
+  if (!lang) return
+  var options = {'json': lang == 'json'}
+  CodeMirror.runMode(code, getAlias(lang), el, options)
+}
 
-  addAlias: function(newAliases) {
-    for (var key in newAliases) {
-      self.aliases[key] = newAliases[key]
-    }
-  },
+function highlight(el) {
+  var lang = el.dataset.lang || 'plain'
+  el.classList.add('highlighted', 'lang-'+lang)
+  process(el.textContent.trim(), lang, el)
+  el.innerHTML = "<code class='highlighted-code static-code cm-s-default'>" + el.innerHTML + "</code>"
+}
 
-  aliasLang: function(lang) {
-    return(self.aliases[lang] || lang)
-  },
+function highlightAll(selector) {
+  selector = selector || '[data-lang]:not(.highlighted)'
+  Array.prototype.forEach.call(document.querySelectorAll(selector), highlight)
+}
 
-  process: function(code, lang, output) {
-    var options = {'json': false}
-
-    if(lang == 'json') {
-      options.json = true 
-    }
-
-    CodeMirror.runMode(code, self.aliasLang(lang), output, options)
-  },
-
-  highlightEl: function(element) {
-    var lang = element.dataset.lang || element.dataset.language
-
-    if (!lang) {
-      classMatch = element.className.match(/lang.*?-(\S+)/)
-      if (classMatch){
-        lang = classMatch[1]
-      } else {
-        // If we can't determine language, skip it.
-        return
-      }
-    }
-
-    // Standardize classes: lang-[language]
-    if (element.classList.contains('language-'+lang)) {
-      element.classList.remove('language-'+lang)
-    }
-
-    element.classList.add('lang-'+lang)
-    element.classList.add('highlighted')
-
-    var code = element.textContent.trim()
-
-    self.process(code, lang, element)
-    element.innerHTML = "<code class='highlighted-code static-code cm-s-default'>" + element.innerHTML + "</code>"
-  },
-
-  highlight: function(selector) {
-    selector = selector || '[class*="language-"], [class*="lang-"], [data-lang], [data-language]'
-
-    var elements = document.querySelectorAll(selector);
-    Array.prototype.forEach.call(elements, function(element) {
-      self.highlightEl(element)
-    })
+function aliasLang(newAliases) {
+  for (var key in newAliases) {
+    aliases[key] = newAliases[key]
   }
 }
 
-module.exports = self = Highlighter
+function getAlias(lang) {
+  return(aliases[lang] || lang)
+}
+
+module.exports = {
+  aliasLang: aliasLang,
+  highlight: highlight,
+  highlightAll: highlightAll
+}
