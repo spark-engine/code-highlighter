@@ -1,5 +1,6 @@
 var highlighter = require('../')
 var utils = require('./_utils')
+
 require( 'codemirror/mode/css/css' )
 require( 'codemirror/mode/ruby/ruby' )
 

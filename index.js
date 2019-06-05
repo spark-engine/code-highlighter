@@ -1,4 +1,5 @@
 var CodeMirror = require('codemirror')
+require( 'codemirror/addon/runmode/runmode' )
 
 // Use CodeMirror to render static code higlighting
 //
